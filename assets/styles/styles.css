@@ -23,7 +23,7 @@ html{
 
 body{
     min-height: 100vh;
-    background-image: url(../images/white-background.jpg);
+    background-image: url(../images/bg0.jpg);
     background-size: cover;
     background-position: center;
     overflow: hidden;
@@ -38,7 +38,7 @@ body{
     text-align: center;
     width: max(20%, 400px);
     background-color: var(--accent-color);
-    padding: 20px;
+    padding: 50px;
     border-radius: 80px;
 }
 
@@ -51,7 +51,7 @@ h1 {
 form {
     width: min(400px, 100%); 
     margin-top: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -108,6 +108,7 @@ svg {
 }
 
 button {
+    margin-top: 15px;
     width: 50%;
     height: 50px;
     background-color: var(--secondary-color);
@@ -155,4 +156,19 @@ a {
 a:hover {
     text-decoration: underline;
     color: #d7dd96;
+}
+
+form div.incorrect input {
+    border-color: #d17575;
+}
+
+form div.incorrect label {
+    background-color: #d17575;
+    border-color: #d17575;
+}
+
+#error_message {
+    color: #d17575;
+    font-size: 1.1rem;
+    margin-top: 10px;
 }
