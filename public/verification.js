@@ -5,10 +5,11 @@ const password_input = document.getElementById('password_input');
 const repeat_password_input = document.getElementById('repeat_password_input');
 const error_message = document.getElementById('error_message');
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
     let errors = [];
+    let isSignup = repeat_password_input !== null;
 
-    if (repeat_password_input) {
+    if (isSignup) {
         errors = getSignupFormErrors(username_input.value, email_input.value, password_input.value, repeat_password_input.value);
     }
 
@@ -18,9 +19,73 @@ form.addEventListener('submit', (e) => {
 
     if (errors.length > 0) {
         e.preventDefault();
-        error_message.innerText = errors.join(', ');
-    }
+        error_message.innerText = errors.join('\n');
+    } 
+    else {
+        if (isSignup) {
+            e.preventDefault();
+            
+            const username = username_input.value;
+            const email = email_input.value;
 
+            try {
+                const response = await fetch('/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, email, password: password_input.value, repeat_password: repeat_password_input.value })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    window.location.href = '/login.html';
+                } else {
+                    if (username!=='' && email!=='') {
+                        error_message.innerText = data.error;
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                error_message.innerText = 'An unexpected error occurred.';
+
+            }
+        
+        }
+        
+        
+        else {
+            e.preventDefault();
+            
+            const username = username_input.value;
+            const password = password_input.value;
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    window.location.href = '/success.html';
+                } else {
+                    if (username!=='' && password!=='') {
+                        error_message.innerText = data.error;
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                error_message.innerText = 'An unexpected error occurred.';
+
+            }
+        }
+    }
 });
 
 
@@ -39,11 +104,6 @@ function getSignupFormErrors(username, email, password, repeatPassword) {
     if (password==='' || password==null) {
         errors.push('Password is required');
         password_input.parentElement.classList.add('incorrect');
-    }
-
-    if (repeatPassword==='' || repeatPassword==null) {
-        errors.push('Repeat Password is required');
-        repeat_password_input.parentElement.classList.add('incorrect');
     }
 
     if (password!==repeatPassword) {

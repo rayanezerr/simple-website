@@ -13,7 +13,7 @@
     <div class="wrapper">
         <h1>Sign Up</h1>
         <p id="error_message"></p>
-        <form id="form">
+        <form id="form" action="/signup" method="POST">
             <div>
                 <label for="username_input">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M480-480q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM160-160v-112q0-34 17.5-62.5T224-378q62-31 126-46.5T480-440q66 0 130 15.5T736-378q29 15 46.5 43.5T800-272v112H160Z"/></svg>               
@@ -36,7 +36,7 @@
                 <label for="repeat_password_input">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="M80-200v-80h800v80H80Zm46-242-52-30 34-60H40v-60h68l-34-58 52-30 34 58 34-58 52 30-34 58h68v60h-68l34 60-52 30-34-60-34 60Zm320 0-52-30 34-60h-68v-60h68l-34-58 52-30 34 58 34-58 52 30-34 58h68v60h-68l34 60-52 30-34-60-34 60Zm320 0-52-30 34-60h-68v-60h68l-34-58 52-30 34 58 34-58 52 30-34 58h68v60h-68l34 60-52 30-34-60-34 60Z"/></svg>
                 </label>
-                <input type="password" name="repeat-password" id="repeat_password_input" placeholder="Confirm Password" pattern=".*\S.*">
+                <input type="password" name="repeat_password" id="repeat_password_input" placeholder="Confirm Password" pattern=".*\S.*">
             </div>
             <button type="submit">Sign Up</button>
         </form>
