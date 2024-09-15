@@ -13,6 +13,7 @@ mongoose.connect(dbKey)
 .catch(err => console.log('ptit probleme:', err));
 
 const app = express();
+app.set('etag', true);
 const port = 3100; 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
