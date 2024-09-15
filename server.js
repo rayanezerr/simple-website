@@ -2,10 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const path = require('path');
 const cors = require('cors');
 
 require('dotenv').config();
-const dbKey = process.env.DB_KEY;
+const dbKey = process.env.MONGODB_URI || process.env.DB_KEY;
 
 mongoose.connect(dbKey)
 .then(() => console.log('WEWEWEWEEEEEEEEEEEEEEE'))
@@ -19,7 +20,11 @@ app.listen(port, () => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'signup.html'));
+  });
 
 const userSchema = new mongoose.Schema({
     username: {type: String, unique: true},
