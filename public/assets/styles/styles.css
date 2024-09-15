@@ -254,4 +254,24 @@ form div.incorrect label {
         font-size: 1.6rem;
         height: 30px;
     }
+
+    @media screen  and (max-width: 500px) {
+        .wrapper {
+            width: 100vh;
+            height: 100vh;
+            border-radius: 0;
+            background-color: #383b53ea;
+            justify-content: center;
+            padding-top: 0;
+        }
+    
+        form {
+            width: 100%;
+    
+        }
+        button {
+            width: 100%;
+        }
+        
+    }
 }
