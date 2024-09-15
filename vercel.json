@@ -1,9 +1,38 @@
 {
-    "version": 2,
-    "builds": [
-      { "src": "server.js", "use": "@vercel/node" }
-    ],
-    "routes": [
-      { "src": "/(.*)", "dest": "/server.js" }
-    ]
-  }
+  "version": 2,
+  "builds": [
+    { "src": "server.js", "use": "@vercel/node" }
+  ],
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/server.js" }
+  ],
+  "headers": [
+    {
+      "source": "/assets/styles(.*)", 
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/assets/scripts(.*)", 
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
+        }
+      ]
+    },
+    {
+      "source": "/(.*\\.html)",  
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0"
+        }
+      ]
+    }
+  ]
+}
