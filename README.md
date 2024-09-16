@@ -1,1 +1,1 @@
-# [Link to the website](https://simple-website-wewe.vercel.app)
+# [Link to the website](https://rrz.vercel.app)
