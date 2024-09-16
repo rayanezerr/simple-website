@@ -4,6 +4,7 @@
     { "src": "server.js", "use": "@vercel/node" }
   ],
   "rewrites": [
+    { "source": "/login.html", "destination": "/login.html" },
     { "source": "/(.*)", "destination": "/server.js" }
   ],
   "headers": [
