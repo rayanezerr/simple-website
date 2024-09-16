@@ -1,1 +1,1 @@
-# [Link to the website](https://rrz.vercel.app)
+# [Link to the website](https://rxr.vercel.app)
