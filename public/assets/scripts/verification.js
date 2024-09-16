@@ -40,7 +40,9 @@ form.addEventListener('submit', async (e) => {
                 const data = await response.json();
                 
                 if (response.ok) {
-                    window.location.href = '/login.html';
+                    setTimeout(() => {
+                        window.location.href = '/login.html';
+                    }, 100);
                 } else {
                     if (username!=='' && email!=='') {
                         error_message.innerText = data.error;
@@ -73,7 +75,7 @@ form.addEventListener('submit', async (e) => {
                 const data = await response.json();
                 
                 if (response.ok) {
-                    window.location.href = '/success.html';
+                    window.location.href = '../../snake/index.html';
                 } else {
                     if (username!=='' && password!=='') {
                         error_message.innerText = data.error;
