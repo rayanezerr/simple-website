@@ -82,26 +82,30 @@ app.post('/login', async (req, res) => {
 });
 
 const validateToken = (req, res, next) => {
+    // Récupère l'en-tête Authorization
     const authHeader = req.headers['authorization'] || req.headers['Authorization'];
+    console.log('Authorization header:', authHeader); // LOG
     
     if (!authHeader) {
-        console.log('No Authorization header found'); 
+        console.log('No Authorization header found'); // LOG
         return res.status(401).json({ error: 'Unauthorized: No token provided' });
     }
 
     const token = authHeader.split(' ')[1];
-    console.log('Extracted token:', token); 
+    console.log('Extracted token:', token); // LOG
     
     if (!token) {
+        console.log('Token missing after splitting Authorization header'); // LOG
         return res.status(401).json({ error: 'Unauthorized: Invalid token format' });
     }
     
+    // Vérifie le token avec jwt.verify
     jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) {
-            console.log('Token verification error:', err);
+            console.log('Token verification error:', err); // LOG
             return res.status(403).json({ error: 'Forbidden: Invalid or expired token' });
         }
-        console.log('Token valid, user:', user);
+        console.log('Token valid, user:', user); // LOG
         req.user = user;
         next();
     });

@@ -76,7 +76,7 @@ form.addEventListener('submit', async (e) => {
                 
                 if (response.ok) {
                     localStorage.setItem('token', data.token);
-                    window.location.href = "/play-snake";
+                    window.location.href = "/snake/index.html";
                     
                 } else {
                     if (username!=='' && password!=='') {
