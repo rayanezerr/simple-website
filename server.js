@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
 require('dotenv').config();
 const dbKey = process.env.MONGODB_URI || process.env.DB_KEY;
@@ -22,10 +23,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'signup.html'));
-  });
+    res.sendFile(path.join(__dirname, 'public', 'homepage.html'));
+});
 
 const userSchema = new mongoose.Schema({
     username: {type: String, unique: true},
@@ -75,6 +77,37 @@ app.post('/login', async (req, res) => {
         return res.status(400).json({ error: 'Invalid password' });
     }
 
-    const token = jwt.sign({userId: user._id}, 'secretkey');
-    return res.status(200).json({ error: 'Connected' });
+    const token = jwt.sign({userId: user._id}, process.env.JWT_SECRET, {expiresIn: '1h'});
+    return res.status(200).json({ token });
+});
+
+const validateToken = (req, res, next) => {
+    const authHeader = req.headers['authorization'] || req.headers['Authorization'];
+    
+    if (!authHeader) {
+        console.log('No Authorization header found'); 
+        return res.status(401).json({ error: 'Unauthorized: No token provided' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    console.log('Extracted token:', token); 
+    
+    if (!token) {
+        return res.status(401).json({ error: 'Unauthorized: Invalid token format' });
+    }
+    
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+        if (err) {
+            console.log('Token verification error:', err);
+            return res.status(403).json({ error: 'Forbidden: Invalid or expired token' });
+        }
+        console.log('Token valid, user:', user);
+        req.user = user;
+        next();
+    });
+};
+
+app.get('/play-snake', validateToken, (req, res) => {
+    console.log('User is authorized. Sending snake game file.');
+    res.sendFile(path.join(__dirname, 'public', 'snake', 'index.html'));
 });

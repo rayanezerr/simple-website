@@ -75,7 +75,9 @@ form.addEventListener('submit', async (e) => {
                 const data = await response.json();
                 
                 if (response.ok) {
-                    window.location.href = '../../snake/index.html';
+                    localStorage.setItem('token', data.token);
+                    window.location.href = "/play-snake";
+                    
                 } else {
                     if (username!=='' && password!=='') {
                         error_message.innerText = data.error;
